@@ -1,27 +1,368 @@
 ---
-title: "Navigating the Command Line"
+title: "Working with the Command Line"
 format:
   revealjs: 
-    theme: serif
+    theme: [serif, custom.scss]
 ---
 
-## Quarto
+## Why the command line?
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
-
-## Bullets
-
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-
-## Code
-
-When you click the `Render` button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
+- Some programs are command line only
+- Working on a remote machine (Nivalis, Hellbender)
+    - Hellbender batch jobs are lists of shell commands
+- Running scripts locally (or remotely)
+- Wide range of programs to accomplish complex tasks easily
 
 
+## Terminals
+
+:::: {.columns}
+
+::: {.column width="50%"}
+MacOS
+
+- Terminal.app
+
+Windows
+
+- [MobaXterm](https://mobaxterm.mobatek.net/)
+- *Note*: not Windows Command application (`cmd`)
+:::
+
+::: {.column width="50%"}
+Cross-platform
+
+- [Alacritty](https://alacritty.org/)
+- [Wezterm](https://wezfurlong.org/wezterm/index.html)
+- RStudio
+:::
+
+::::
+
+
+## Shells
+
+- bash (common Linux default, RStudio)
+- zsh (MacOS default)
+- [and many others](https://en.wikipedia.org/wiki/Unix_shell)
+
+What is my shell?: `echo $0`
+
+Change my shell: `chsh -s /bin/zsh`
+
+
+## What happens when a terminal launches?
+
+A series of configuration files are executed (if present)
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**bash**
+
+- `~/.profile`
+- `~/.bash_profile`
+- `~/.bashrc`
+:::
+
+::: {.column width="50%"}
+**zsh**
+
+- `~/.profile`
+- `~/.zprofile`
+- `~/.zshrc`
+:::
+
+::::
+
+[Others are available](https://en.wikipedia.org/wiki/Unix_shell#Configuration_files).
+
+
+## Where am I?
+
+You only have one working directory at a time per terminal session.
+
+<br />
+
+`~` is your home directory (i.e., "folder")
+
+- e.g., `~/.bash_profile` is located in your home directory
+
+<br />
+
+Print working directory: `pwd`
+
+
+## Every file in its place
+
+<br /> 
+
+Directory thinking:
+
+- Rigid directory structure is fundamental to scientific computing
+- Cloud services make finding files (too) easy
+
+Think about how/where your files are organized.
+
+
+## Directory contents
+
+List files, directories, and symbolic links
+
+- Long list: `ls -l <dir>`
+- List all (including hidden "dot" files): `ls -a <dir>`
+- Long list all: `ls -la <dir>`
+- `<dir>` is optional
+
+Modern replacement for `ls`: [`eza`](https://eza.rocks/)
+
+
+## Directory operations
+
+Creating
+
+- Make a directory: `mkdir <dir>`
+- Make a directory including "parents": `mkdir -p <dir1>/<dir2>`
+
+Removing
+
+- Remove a directory: `rmdir <dir>`
+- Remove with all its contents: `rmdir -r <dir>`
+- `-f` to remove without confirmation (use carefully)
+
+
+## Changing directories: `cd`
+
+To a specific directory: `cd <dir1>/<dir2` 
+
+To home: `cd ~` or just `cd`
+
+- Use tab completion to help you
+
+To the parent directory: `cd ..`
+
+- `.` is the working directory. `..` is the parent.
+- What does `cd ../../<dir>` do?
+
+
+## Copying: `cp`
+
+- `cp <file1> </path/to/target/dir>`
+- Recursive: `cp -r <dir1> </path/to/dir2>`
+
+Options:
+
+- Check before overwrite: `-i`
+- Only copy if source is newer: `-u`
+
+What does `cp </path/to/source/file> .` do?
+
+
+## Moving: `mv`
+
+- Similar options as `cp`: `-i` and `-u`
+- Recursion is assumed for directories
+
+`mv <file> /path/to/target/`
+
+`mv <dir> /path/to/target/`
+
+
+## Deleting: `rm`
+
+- Single file: `rm <file>` or `rm /path/to/file`
+- Multi-file: `rm <file1> <file2>`
+- Wildcard matching: `rm *.txt` or `rm out_*.txt`
+    - Don't do `rm *`
+- Delete a directory and all its contents: `rm -fr <dir>` (carefully)
+    - Most often easier than `rmdir`
+
+
+## What can go in configuration files?
+
+- Shell variables (e.g., `PATH`)
+- Aliases
+- Some installers will add to configurations (e.g., Anaconda, Miniconda)
+
+
+## Editors
+
+- `nano`
+- `pico`
+- `micro`
+- `vi` / `vim` / `neovim`
+- Many many others
+
+
+## Finding a program: `which`
+
+`which zsh`
+
+`which nano`
+
+`which micro`
+
+- If nothing is returned, the program is not in your search `PATH`
+
+
+## Shell variables
+
+- Default value for a variable
+- Typically `ALL_CAPS` with underscores
+
+Variables set in this session: `env`
+
+
+## The `PATH`
+
+- Set of folders that the shell will look for when trying to find a program ("executable")
+
+`echo $PATH`
+
+`echo $HOME`
+
+- Need to include `$` to print (`echo`) a shell variable
+
+
+## Aliases
+
+- You find yourself typing `ls -la` often. Can I define a shortcut?
+
+`alias lsa='ls -la'`
+
+- Executing `lsa` will run `ls -la`
+- Note `'`
+- Put this in `.bashrc` or `.zshrc`
+
+What does `alias ls='ls -l'` do?
+
+
+## Looking at files
+
+- Print a file: `cat <file>`
+- Print a long file: `more <file>`
+- Peek at the top of a file: `head <file>`
+- Peek at the bottom of a file: `tail <file>`
+
+
+## Editing configuration files
+
+`nano .bashrc`
+
+`nano .zshrc`
+
+- Or you can use a GUI text editor (but dot-files are usually hidden by default)
+
+Reload: 
+
+- `source .bashrc`
+- `source .zshrc`
+
+
+## Command line input/output
+
+- Standard input (stream 0): *stdin*
+- Standard output (stream 1): *stdout*
+- Error output (stream 2): *errout*
+
+Interactively both outputs go to the same place (the terminal)
+
+
+## Output redirection
+
+Send the output of a command to a file:
+
+- `ls -l > my_files.txt`
+
+For long-running jobs, batch scripts, etc., often you will send outputs and errors to separate log files (`1>` or `>`)
+
+- `long_job.sh 1> logfile.txt 2> errorfile.txt`
+- `long_job.sh > logfile.txt 2> errorfile.txt`
+
+
+## Redirecting to the same file
+
+`long_job.sh 1> logfile.txt 2>&1`
+
+- Send *stdout* to `logfile.txt`
+- Send *stderr* to *stdout*, which is sent to `logfile.txt`
+
+
+## Discarding output silently
+
+Redirect to the NULL device:
+
+- `long_job.sh 1> logfile.txt 2> /dev/null`
+- `long_job.sh 1> /dev/null 2> /dev/null`
+
+
+## Pipes: `|`
+
+Send the output of one command to another
+
+`du -h -d 1 Documents | sort -n | tail -n 5`
+
+- Calculate disk usage (`du`) of Documents in human readable form (`-h`) with a depth of 1 (`-d 1`)
+- Send *stdout* to `sort` and sort by size (`-n`; numerically)
+- Show only the last 5 lines
+
+
+## Searching: `grep`
+
+`cat my_files.txt | grep "Documents"`
+
+- `grep` searches for a string in a file
+- `grep "Do" my_files.txt`
+    - Finds "Documents" and "Downloads"
+
+
+## Terminal multiplexing: `tmux`
+
+- Managing long-running processes
+- Run separate, independent terminals
+- Persistent across logins
+- Attach and detach sessions
+- Good for starting a process, logging out, logging back in, and rejoining the job
+
+[tmux Cheatsheet](https://tmuxcheatsheet.com/)
+
+
+## Managing jobs
+
+What processes are running?
+
+- `top`
+- `htop`
+- `btop`
+
+Ending a process (use carefully):
+
+`kill -9 <process ID>`
+
+
+## Symbolic links
+
+Treat a file or directory from a different part of the filesystem as if it were a local file/directory
+
+- `ln -s <source> <target>`
+- Nivalis has a `data_share` directory that everyone can access
+    - `ln -n /home/data_share ~/shared_data`
+    - `ls ~/shared_data` will show the contents of `/home/data_share`
+
+## Syncing files: `rsync`
+
+- Like `cp` but with some more useful options and error checking to ensure file exactness
+- Exclude files (good for backups)
+- Works over `ssh`
+- Be careful with `/` (sync contents of a directory) or not (sync entire directory as a whole)
+
+
+## Syncing files: `rsync`
+
+`rsync -av --progress /path/to/source .`
+
+- Sync with recursion (`-a`; "archive") and verbose output (`-v`) showing progress (`--progress`)
+- Directory `source` to current working directory `.`
+- *Note*: Will create `source` in `.`
+
+What will `rsync -av --progress /path/to/source/ .` do?
