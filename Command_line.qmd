@@ -32,8 +32,8 @@ Windows
 ::: {.column width="50%"}
 Cross-platform
 
-- [Alacritty](https://alacritty.org/)
 - [Wezterm](https://wezfurlong.org/wezterm/index.html)
+- [Alacritty](https://alacritty.org/)
 - RStudio
 :::
 
@@ -210,7 +210,7 @@ What does `cp </path/to/source/file> .` do?
 - Default value for a variable
 - Typically `ALL_CAPS` with underscores
 
-Variables set in this session: `env`
+List variables in this session: `env`
 
 
 ## The `PATH`
@@ -243,6 +243,7 @@ What does `alias ls='ls -l'` do?
 - Print a long file: `more <file>`
 - Peek at the top of a file: `head <file>`
 - Peek at the bottom of a file: `tail <file>`
+- Options for showing different numbers of lines and "following" files that are being written to
 
 
 ## Editing configuration files
@@ -268,7 +269,7 @@ Reload:
 Interactively both outputs go to the same place (the terminal)
 
 
-## Output redirection
+## Output redirection: `>`
 
 Send the output of a command to a file:
 
@@ -288,7 +289,7 @@ For long-running jobs, batch scripts, etc., often you will send outputs and erro
 - Send *stderr* to *stdout*, which is sent to `logfile.txt`
 
 
-## Discarding output silently
+## Discarding output silently: `/dev/null`
 
 Redirect to the NULL device:
 
@@ -348,6 +349,7 @@ Treat a file or directory from a different part of the filesystem as if it were 
 - Nivalis has a `data_share` directory that everyone can access
     - `ln -n /home/data_share ~/shared_data`
     - `ls ~/shared_data` will show the contents of `/home/data_share`
+
 
 ## Syncing files: `rsync`
 
