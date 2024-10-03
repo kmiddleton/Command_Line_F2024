@@ -145,6 +145,16 @@ To the parent directory: `cd ..`
 - What does `cd ../../<dir>` do?
 
 
+## Tab completion
+
+Auto-completion of commands, files, and paths
+
+Type a few letters + press Tab:
+
+- `cd Doc` + Tab
+- `cd Do` + Tab + Tab (sometimes)
+
+
 ## Copying: `cp`
 
 - `cp <file1> </path/to/target/dir>`
