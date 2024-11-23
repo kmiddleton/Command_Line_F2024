@@ -48,4 +48,3 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 /Command_line_files
-*.html
